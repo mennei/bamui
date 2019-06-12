@@ -10,7 +10,7 @@ module.exports = {
     VALUES_URL: "http://localhost:3000/bamui/api/v1/values",
     TEST_URL: "http://localhost:3000/bamui/api/v1/test",
     UPDATE_URL: "http://localhost:3000/bamui/api/v1/update",
-    // Oauth2 
+    // Some oauth service 
     TOKEN_URL: process.env.TOKEN_URL || "https://localhost/api/v1/token",
     LOGIN_URL: "http://bam-ui:3000/bamui/api/v1/loginAuthentication",
 }

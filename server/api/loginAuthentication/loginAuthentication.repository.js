@@ -1,11 +1,11 @@
-const config = require("../../../server.config");
-const logger = require("menora.libs.logger");
-const fetch = require('menora.libs.ssl.fetch');
-const { isEmptyObject } = require('menora.libs.common/validations');
+const config = require ('../../../server.config');
+// mport fetch from 'isomorphic-unfetch';const logger = require ('menora.libs.logger');
+const fetch = require ('isomorphic-unfetch');
+//const {isEmptyObject} = require ('menora.libs.common/validations');
 
 // async function loginAuthenticationRepo(req) {
 // 	try {
-// 		logger.info(`${__filename} try create token `, req);
+// 		console.log(`${__filename} try create token `, req);
 // 		const bodyRequest = {
 // 			username: config.ADMIN_TOKEN_USERNAME,
 // 			password: config.ADMIN_TOKEN_PASSWORD,
@@ -26,59 +26,55 @@ const { isEmptyObject } = require('menora.libs.common/validations');
 // 			throw new Error(msg);
 // 		}
 // 		// on success
-// 		logger.info(`${__filename} success create token `, req);
+// 		console.log(`${__filename} success create token `, req);
 // 		return response.data;
 // 	}
 // 	catch (err) {
-// 		logger.error(`${__filename} - ERROR on loginAuthenticationRepo: ${err.message}`, req);
+// 		console.log(`${__filename} - ERROR on loginAuthenticationRepo: ${err.message}`, req);
 // 		throw err;
 // 	}
 
 // }
 
-async function loginAuthenticationRepo(req) {
-	try {
-		const jsonRequest = {
-			username: config.API_USER_NAME_FOR_TOKEN,
-			password: config.API_PASSWORD_FOR_TOKEN,
-			// requestId,
-			// processName: processId,
-			// agentNumber,
-			// channelType: 'agent'
-		};
+async function loginAuthenticationRepo (req) {
+  try {
+    const jsonRequest = {
+      username: config.API_USER_NAME_FOR_TOKEN,
+      password: config.API_PASSWORD_FOR_TOKEN,
+      // requestId,
+      // processName: processId,
+      // agentNumber,
+      // channelType: 'agent'
+    };
 
-		const token = await fetch.fetch(
-			config.TOKEN_URL,
-			config.API_BASIC_HTTP_USER_NAME,
-			config.API_BASIC_HTTP_PASSWORD,
-			null,
-			null,
-			jsonRequest,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': config.TOKEN_AUTHORIZATION,
-				}
-			}
-		);
+    const token = await fetch.fetch (
+      config.TOKEN_URL,
+      config.API_BASIC_HTTP_USER_NAME,
+      config.API_BASIC_HTTP_PASSWORD,
+      null,
+      null,
+      jsonRequest,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: config.TOKEN_AUTHORIZATION,
+        },
+      }
+    );
 
-		if (
-			isEmptyObject(token) ||
-			!token ||
-			!token.hasOwnProperty('data')
-		) {
-			throw new Error('can not create token');
-		}
+    /* if (isEmptyObject (token) || !token || !token.hasOwnProperty ('data')) {
+      throw new Error ('can not create token');
+    } */
 
-		logger.info('sendInsuRequest.repository createNewToken:', token.data);
-		return token.data;
-	} catch (e) {
-		logger.error(`sendInsuRequest.repository createNewToken ${e.message}`, {});
-		throw new Error(`[createNewToken] - ${e.message} `);
-	}
+    console.log ('sendInsuRequest.repository createNewToken:', token.data);
+    return token.data;
+  } catch (e) {
+    console.log (`sendInsuRequest.repository createNewToken ${e.message}`, {});
+    throw new Error (`[createNewToken] - ${e.message} `);
+  }
 }
 
 module.exports = {
-	loginAuthenticationRepo
+  loginAuthenticationRepo,
 };
